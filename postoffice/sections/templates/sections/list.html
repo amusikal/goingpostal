@@ -1,0 +1,9 @@
+{{ view.title }}
+
+
+<dl>
+  {% for each in object_list %}
+  <dt>{{ each }}</dt>
+  <dd>{{ each.description|linebreaks}}</dd>
+  {% endfor %}
+</dl>
