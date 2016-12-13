@@ -13,5 +13,9 @@ class OrganisationAdmin(admin.ModelAdmin):
     inlines = [OrganisationMemberInline]
 
 
+class OrganisationMemberAdmin(admin.ModelAdmin):
+    list_display = ('user', 'organisation', 'created', 'modified')
+
+
 admin.site.register(Organisation, OrganisationAdmin)
-admin.site.register(OrganisationMember)
+admin.site.register(OrganisationMember, OrganisationMemberAdmin)
