@@ -1,0 +1,13 @@
+<h1>{% if view.kwargs.month %}
+  Articles for {{ view.kwargs.month }}/{{ view.kwargs.year }}
+{% elif view.kwargs.year %}
+  Articles for {{ view.kwargs.year }}
+{% else %}
+  Articles
+  {% endif %}</h1>
+
+
+{% for object in object_list %}
+
+<h2><a href="{{ object.get_absolute_url }}">{{ object.title }}</a></h2>
+{% endfor %}

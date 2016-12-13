@@ -15,6 +15,7 @@ class Organisation(models.Model):
         )
     created = models.DateTimeField(blank=True, null=True)
     modified = models.DateTimeField(blank=True, null=True)
+    site = models.OneToOneField('sites.Site', null=True)
 
     def __str__(self):
         return self.name
@@ -35,3 +36,8 @@ class OrganisationMember(models.Model):
 
     class Meta:
         unique_together = (['user', 'organisation'], )
+
+
+class OrganisationSite(models.Model):
+    organisation = models.ForeignKey(Organisation)
+    site = models.OneToOneField('sites.Site')

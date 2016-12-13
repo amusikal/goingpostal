@@ -1,4 +1,13 @@
-{{ object.title }}
+<h1>{{ object.title }}</h1>
 
 
 {{ object.content }}
+
+
+<h2>Comments</h2>
+{% for comment in object.comments %}
+<div class="comment" id="comment-{{ comment.id }}" style="border-top: 1px solid #eee; padding-top: 1em; ">
+  <pre>#comment-{{ object.uuid }}:{{ comment.id }}</pre>
+  {{ comment.comment|linebreaks }}
+</div>
+{% endfor %}

@@ -1,11 +1,13 @@
 import uuid
 from django.db import models
 from django.conf import settings
+from core.models import TimeStamped
 
 
-class Topic(models.Model):
+class Topic(TimeStamped):
 
     name = models.CharField(max_length=255)
+    slug = models.SlugField(max_length=255)
     organisation = models.ForeignKey('organisations.Organisation')
 
     uuid = models.UUIDField(
@@ -13,8 +15,17 @@ class Topic(models.Model):
         unique=True,
         default=uuid.uuid4
         )
-    created = models.DateTimeField(blank=True, null=True)
-    modified = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        unique_together = (['slug', 'organisation'], )
+
+    def __str__(self):
+        return self.name
+
+    @property
+    def articles(self):
+        qs = self.article_set.all()
+        return qs
 
 
 class TopicMember(models.Model):

@@ -25,7 +25,7 @@ SECRET_KEY = '@)hgn-f^1dqea(law94=gp61adljey&cxb*g6d*#c*)u-@lgon'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 SITE_ID = 1
 MASTER_SITE_ID = SITE_ID
@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.redirects',
+    'django.contrib.flatpages',
 
     'django_prbac',
     'django_comments',
@@ -50,7 +51,7 @@ INSTALLED_APPS = [
     'topics',
     'sections',
     'articles',
-    'domains',
+    'multisite',
 ]
 
 MIDDLEWARE = [
@@ -62,8 +63,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'domains.middleware.multisite_middleware',
-    'domains.middleware.redirect_fallback_middleware',
+    'multisite.middleware.multisite_middleware',
+    'multisite.middleware.redirect_fallback_middleware',
 ]
 
 ROOT_URLCONF = 'postoffice.urls'

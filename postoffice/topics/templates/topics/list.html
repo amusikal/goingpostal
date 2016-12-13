@@ -1,0 +1,9 @@
+<h1>{{ view.title|default:'Topics' }}</h1>
+
+
+<dl>
+  {% for each in object_list %}
+  <dt>{{ each }}</dt>
+  <dd>{{ each.description|linebreaks}}</dd>
+  {% endfor %}
+</dl>

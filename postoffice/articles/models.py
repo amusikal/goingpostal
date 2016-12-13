@@ -1,11 +1,15 @@
 import uuid
 
+from django.core.urlresolvers import reverse
 from django.db import models
+from django.db.models import Q
 from django.utils.html import strip_tags
 from django.utils.translation import ugettext_lazy as _
 from django.utils.html import linebreaks
 
 from core.models import TimeStamped
+import django_comments as comments
+from django_comments.models import CommentFlag
 
 
 def html_format(content):
@@ -32,6 +36,8 @@ class CoreEntry(models.Model):
         max_length=255,
         unique_for_date='published'
         )
+
+    topic = models.ForeignKey('topics.Topic', null=True)
 
     DRAFT = 0
     HIDDEN = 1
@@ -62,6 +68,13 @@ class CoreEntry(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('articles.article.detail', kwargs={
+            'year': self.created.year,
+            'month': self.created.strftime('%m'),
+            'slug': self.slug,
+            })
 
 
 class ContentEntry(models.Model):
@@ -112,21 +125,21 @@ class DiscussionsEntry(models.Model):
     class Meta:
         abstract = True
 
-    #@property
-    #def discussions(self):
-    #    """
-    #    Returns a queryset of the published discussions.
-    #    """
-    #    return comments.get_model().objects.for_model(
-    #        self).filter(is_public=True, is_removed=False)
+    @property
+    def discussions(self):
+        """
+        Returns a queryset of the published discussions.
+        """
+        return comments.get_model().objects.for_model(
+            self).filter(is_public=True, is_removed=False)
 
-    #@property
-    #def comments(self):
-    #    """
-    #    Returns a queryset of the published comments.
-    #    """
-    #    return self.discussions.filter(Q(flags=None) | Q(
-    #        flags__flag=CommentFlag.MODERATOR_APPROVAL))
+    @property
+    def comments(self):
+        """
+        Returns a queryset of the published comments.
+        """
+        return self.discussions.filter(Q(flags=None) | Q(
+            flags__flag=CommentFlag.MODERATOR_APPROVAL))
 
     #@property
     #def pingbacks(self):

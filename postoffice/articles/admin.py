@@ -15,6 +15,7 @@ class ArticleAdmin(admin.ModelAdmin):
             )}),
         ('Publication', {'fields': (
             'status',
+            'topic',
             'published',
             )}),
         ('Metadata', {
