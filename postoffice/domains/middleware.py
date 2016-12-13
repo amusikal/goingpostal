@@ -1,7 +1,11 @@
 import os
 
 from django.conf import settings
+from django.contrib.redirects.models import Redirect
 from django.contrib.sites.models import Site
+from django.core.exceptions import MiddlewareNotUsed
+from django.http import HttpResponseGone
+from django.http import HttpResponsePermanentRedirect
 
 
 def cache_installed():
@@ -50,5 +54,38 @@ def multisite_middleware(get_response):
 
         response = get_response(request)
         return response
+
+    return middleware
+
+
+def redirect_fallback_middleware(get_response):
+    """
+    Port of Django's ``RedirectFallbackMiddleware`` that uses
+    Mezzanine's approach for determining the current site.
+    """
+
+    def middleware(request):
+        response = get_response(request)
+
+        if response.status_code == 404:
+            lookup = {
+                'site_id': request.site_id,
+                'old_path': request.get_full_path(),
+            }
+            try:
+                redirect = Redirect.objects.get(**lookup)
+            except Redirect.DoesNotExist:
+                pass
+            else:
+                if not redirect.new_path:
+                    response = HttpResponseGone()
+                else:
+                    response = HttpResponsePermanentRedirect(
+                        redirect.new_path)
+
+        return response
+
+    if 'django.contrib.redirects' not in settings.INSTALLED_APPS:
+        raise MiddlewareNotUsed
 
     return middleware

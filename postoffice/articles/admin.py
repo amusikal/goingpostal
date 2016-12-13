@@ -17,6 +17,14 @@ class ArticleAdmin(admin.ModelAdmin):
             'status',
             'published',
             )}),
+        ('Metadata', {
+            'fields': (
+                'created',
+                'modified',
+                'uuid',
+                ),
+            'classes': ('collapse', )
+            }),
         )
     # exclude = (
     #     'related',

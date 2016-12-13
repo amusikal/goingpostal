@@ -1,10 +1,11 @@
 import uuid
 
 from django.db import models
-from django.utils import timezone
 from django.utils.html import strip_tags
 from django.utils.translation import ugettext_lazy as _
 from django.utils.html import linebreaks
+
+from core.models import TimeStamped
 
 
 def html_format(content):
@@ -48,8 +49,6 @@ class CoreEntry(models.Model):
         default=DRAFT
         )
 
-    created = models.DateTimeField(blank=True, null=True)
-    modified = models.DateTimeField(blank=True, null=True)
     published = models.DateTimeField(blank=True, null=True)
     unpublished = models.DateTimeField(blank=True, null=True)
 
@@ -63,12 +62,6 @@ class CoreEntry(models.Model):
 
     def __str__(self):
         return self.title
-
-    def save(self, *args, **kwargs):
-        self.modified = timezone.now()
-        if not self.created:
-            self.created = self.modified
-        super().save(*args, **kwargs)
 
 
 class ContentEntry(models.Model):
@@ -235,7 +228,8 @@ class AbstractArticle(
         ContentEntry,
         DiscussionsEntry,
         RelatedEntry,
-        LeadEntry):
+        LeadEntry,
+        TimeStamped):
 
     class Meta(CoreEntry.Meta):
         abstract = True

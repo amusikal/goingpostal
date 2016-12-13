@@ -27,6 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+SITE_ID = 1
+MASTER_SITE_ID = SITE_ID
+
 
 # Application definition
 
@@ -38,13 +41,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django.contrib.redirects',
 
     'django_prbac',
     'django_comments',
 
     'organisations',
     'topics',
+    'sections',
     'articles',
+    'domains',
 ]
 
 MIDDLEWARE = [
@@ -55,6 +61,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'domains.middleware.multisite_middleware',
+    'domains.middleware.redirect_fallback_middleware',
 ]
 
 ROOT_URLCONF = 'postoffice.urls'
