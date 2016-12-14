@@ -21,5 +21,6 @@ urlpatterns = [
     url(r'^comments/', include('django_comments.urls')),
     url(r'^sections/', include('sections.urls')),
     url(r'^topics/', include('topics.urls')),
-    url(r'^', include('articles.urls')),
+    url(r'^articles/', include('articles.urls')),
+    url(r'^frontadmin/', include('frontadmin.urls')),
 ]
