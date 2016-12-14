@@ -2,7 +2,6 @@ import uuid
 from django.db import models
 from django.conf import settings
 
-# Create your models here.
 
 class Organisation(models.Model):
 
@@ -13,6 +12,10 @@ class Organisation(models.Model):
         unique=True,
         default=uuid.uuid4
         )
+
+    is_active = models.BooleanField(default=True)
+    is_locked = models.BooleanField(default=False)
+
     created = models.DateTimeField(blank=True, null=True)
     modified = models.DateTimeField(blank=True, null=True)
     site = models.OneToOneField('sites.Site', null=True)

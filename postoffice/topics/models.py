@@ -2,13 +2,14 @@ import uuid
 from django.db import models
 from django.conf import settings
 from core.models import TimeStamped
+from django.core.urlresolvers import reverse
 
 
 class Topic(TimeStamped):
 
     name = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255)
-    organisation = models.ForeignKey('organisations.Organisation')
+    section = models.ForeignKey('sections.Section')
 
     uuid = models.UUIDField(
         verbose_name='UUID',
@@ -17,10 +18,13 @@ class Topic(TimeStamped):
         )
 
     class Meta:
-        unique_together = (['slug', 'organisation'], )
+        unique_together = (['slug', 'section'], )
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('topics.topic.detail', kwargs={'slug': self.slug})
 
     @property
     def articles(self):

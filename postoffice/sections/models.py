@@ -1,31 +1,33 @@
 import uuid
 from django.db import models
 from django.conf import settings
+from core.models import TimeStamped
+from django.core.urlresolvers import reverse
 
 
-class Section(models.Model):
+class Section(TimeStamped):
 
     name = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255)
-    organisation = models.ForeignKey('organisations.Organisation')
     description = models.TextField(blank=True)
-
+    site = models.ForeignKey('sites.Site', null=True)
     uuid = models.UUIDField(
         verbose_name='UUID',
         unique=True,
         default=uuid.uuid4
         )
-    created = models.DateTimeField(blank=True, null=True)
-    modified = models.DateTimeField(blank=True, null=True)
 
     class Meta:
-        unique_together = (['slug', 'organisation'], )
+        unique_together = (['slug', 'site'], )
 
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('sections.section.detail', kwargs={'slug': self.slug})
 
-class SectionMember(models.Model):
+
+class SectionMember(TimeStamped):
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     section = models.ForeignKey(Section)
@@ -52,8 +54,6 @@ class SectionMember(models.Model):
         unique=True,
         default=uuid.uuid4
         )
-    created = models.DateTimeField(blank=True, null=True)
-    modified = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         unique_together = (['user', 'section'], )
