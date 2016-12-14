@@ -1,15 +1,19 @@
 from django.views.generic import TemplateView
 from .models import Section
 from .models import SectionMember
+from django.shortcuts import get_object_or_404
 
 
-class SectionListView(TemplateView):
+class SectionViewBase(TemplateView):
+
+    def get_queryset(self):
+        return Section.objects.filter(site_id=self.request.site_id)
+
+
+class SectionListView(SectionViewBase):
 
     template_name = 'sections/list.html'
     title = 'Sections'
-
-    def get_queryset(self):
-        return Section.objects.all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -17,12 +21,12 @@ class SectionListView(TemplateView):
         return context
 
 
-class SectionDetailView(TemplateView):
+class SectionDetailView(SectionViewBase):
 
     template_name = 'sections/detail.html'
 
     def get_object(self):
-        return Section.objects.get(slug=self.kwargs['slug'])
+        return get_object_or_404(Section, slug=self.kwargs['slug'])
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

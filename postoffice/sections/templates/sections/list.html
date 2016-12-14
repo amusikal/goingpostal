@@ -3,7 +3,7 @@
 
 <dl>
   {% for each in object_list %}
-  <dt>{{ each }}</dt>
+  <dt><a href="{{ each.get_absolute_url }}">{{ each }}</a></dt>
   <dd>{{ each.description|linebreaks}}</dd>
   {% endfor %}
 </dl>

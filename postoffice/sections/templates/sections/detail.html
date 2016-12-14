@@ -6,3 +6,10 @@
   <li>{{ member.user }}</li>
   {% endfor %}
 </ul>
+
+
+<ul>
+  {% for topic in object.topic_set.all %}
+  <li><a href="{{ topic.get_absolute_url }}">{{ topic }}</a></li>
+  {% endfor %}
+</ul>

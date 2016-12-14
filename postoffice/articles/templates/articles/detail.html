@@ -1,7 +1,8 @@
 <h1>{{ object.title }}</h1>
+<p>{{ object.topic.section }} &middot; {{ object.topic }}
 
 
-{{ object.content }}
+{{ object.content|linebreaks }}
 
 
 <h2>Comments</h2>

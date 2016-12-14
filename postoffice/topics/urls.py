@@ -2,6 +2,7 @@ from django.conf.urls import url
 from topics.views import TopicDetailView
 from topics.views import TopicListView
 
+
 urlpatterns = [
     url(r'^(?P<slug>[a-z0-9-]+)/$',
         TopicDetailView.as_view(), name='topics.topic.detail'),

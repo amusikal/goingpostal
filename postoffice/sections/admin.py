@@ -9,9 +9,10 @@ class SectionMemberInline(admin.TabularInline):
 
 
 class SectionAdmin(admin.ModelAdmin):
-    list_display = ('name', 'organisation', 'created', 'modified')
+    list_display = ('name', 'site', 'created', 'modified')
     date_hierarchy = 'modified'
     readonly_fields = ('created', 'modified', 'uuid')
+    raw_id_fields = ('site', )
     inlines = [SectionMemberInline]
 
 
