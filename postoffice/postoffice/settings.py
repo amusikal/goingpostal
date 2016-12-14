@@ -44,8 +44,11 @@ INSTALLED_APPS = [
     'django.contrib.redirects',
     'django.contrib.flatpages',
 
-    'django_prbac',
     'django_comments',
+    'floppyforms',
+
+    'frontadmin',
+    'jam',
 
     'organisations',
     'topics',
