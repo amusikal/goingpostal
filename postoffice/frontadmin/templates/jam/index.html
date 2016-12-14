@@ -1,0 +1,17 @@
+{% extends 'jam/base.html' %}
+
+
+{% block main %}
+    <section>
+        <header>
+        <h1>Postoffice Admin</h1>
+        </header>
+
+        <div class="model-group">
+            <h2>Example app</h2>
+            <ul>
+                <li><a href="{% url 'articles.article.list' %}">Articles</a></li>
+            </ul>
+        </div><!-- /.model-group -->
+    </section>
+{% endblock main %}
