@@ -1,9 +1,17 @@
+# Django
 from django.contrib import admin
+
+# Local
 from .models import Article
+from .models import Author
 
 
 class RelatedEntryInlineAdmin(admin.TabularInline):
     model = Article
+
+
+class AuthorInlineAdmin(admin.TabularInline):
+    model = Author
 
 
 class ArticleAdmin(admin.ModelAdmin):
@@ -45,5 +53,7 @@ class ArticleAdmin(admin.ModelAdmin):
         'uuid',
         'published'
         )
+    inlines = [AuthorInlineAdmin]
 
 admin.site.register(Article, ArticleAdmin)
+admin.site.register(Author)

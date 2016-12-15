@@ -1,7 +1,12 @@
-from django.views.generic import TemplateView
-from .models import Article
-from sections.models import Section
+# Django
 from django.shortcuts import get_object_or_404
+from django.views.generic import TemplateView
+
+# Project
+from sections.models import Section
+
+# Local
+from .models import Article
 
 
 class ArticleViewBase(TemplateView):

@@ -1,4 +1,7 @@
+# Django
 from django.conf.urls import url
+
+# Project
 from articles.views import ArticleDetailView
 from articles.views import ArticleListView
 

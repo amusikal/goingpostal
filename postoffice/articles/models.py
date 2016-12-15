@@ -1,15 +1,21 @@
+# Standard Library
 import uuid
 
+# Django
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models import Q
+from django.utils.html import linebreaks
 from django.utils.html import strip_tags
 from django.utils.translation import ugettext_lazy as _
-from django.utils.html import linebreaks
 
-from core.models import TimeStamped
+# 3rd-party
 import django_comments as comments
 from django_comments.models import CommentFlag
+
+# Project
+from core.models import TimeStamped
 
 
 def html_format(content):
@@ -43,9 +49,9 @@ class CoreEntry(models.Model):
     HIDDEN = 1
     PUBLISHED = 2
     STATUS_CHOICES = (
-        (DRAFT, _('draft')),
-        (HIDDEN, _('hidden')),
-        (PUBLISHED, _('published'))
+        (DRAFT, _('Draft')),
+        (HIDDEN, _('Hidden')),
+        (PUBLISHED, _('Published'))
         )
 
     status = models.IntegerField(
@@ -251,4 +257,13 @@ class AbstractArticle(
 
 
 class Article(AbstractArticle):
-    pass
+    authors = models.ManyToManyField(settings.AUTH_USER_MODEL, through='Author')
+
+
+class Author(models.Model):
+
+    article = models.ForeignKey(Article)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+
+    class Meta:
+        unique_together = (['article', 'user'], )
