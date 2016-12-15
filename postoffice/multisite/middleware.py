@@ -1,5 +1,7 @@
+# Standard Library
 import os
 
+# Django
 from django.conf import settings
 from django.contrib.redirects.models import Redirect
 from django.contrib.sites.models import Site
