@@ -1,0 +1,35 @@
+{% extends 'jam/base.html' %}
+{% load jam_tags %}
+
+{% block main %}
+  <section>
+
+    <p><a href="{% url view.crud.create.name %}" class="button">Add {{ view.crud.opts.verbose_name }}</a></p>
+
+    <header>
+      <h1>Select {{ view.crud.opts.verbose_name }} to change</h1>
+    </header>
+
+
+    <table class="thread-listing" style="width:100%;">
+      <tr>
+        <th>Name</th>
+        <th>Modified</th>
+      </tr>
+
+      {% for object in object_list %}
+      <tr>
+        <td style="line-height:0.8;"><h4><a href="{% url view.crud.update.name pk=object.pk %}">{{ object }}</a></h4>
+
+          <br><span class="subtitle">in {{ object.topic }}</span></td>
+        <td style="font-size: 1.5rem;">
+          Modified: {{ object.modified }}
+          <br>Status: {{ object.get_status_display }}
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+
+  </section>
+
+{% endblock main %}

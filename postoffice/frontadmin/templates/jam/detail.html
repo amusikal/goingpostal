@@ -1,0 +1,13 @@
+{% extends 'jam/base.html' %}
+{% load jam_tags %}
+
+{% block main %}
+{{ object }}
+<dl>
+    {% for field in view.fields %}
+    <dt>{{ object|get_field_verbose_name:field }}</dt>
+    <dd>{{ object|get_field_display:field }}</dd>
+
+  {% endfor %}
+</dl>
+{% endblock main%}

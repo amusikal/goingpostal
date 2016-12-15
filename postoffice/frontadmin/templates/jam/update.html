@@ -1,0 +1,21 @@
+{% extends 'jam/list.html' %}
+
+{% block main %}
+  <section>
+
+    <header>
+      <h1>Change {{ view.crud.opts.verbose_name }}</h1>
+    </header>
+
+    <form action="" method="post">
+      {% csrf_token %}
+      {{ form }}
+      <div class="formrow" style="margin-top: 1em;">
+        <button type="submit" class="button-primary">Save</button>
+        <a href="{% url view.crud.list.name %}" class="button link">Cancel</a>
+
+        <span style="float:right;"><a href="{% url view.crud.delete.name pk=object.pk %}" class="button warning">Delete</a></span>
+      </div>
+    </form>
+  </section>
+{% endblock %}
