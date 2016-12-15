@@ -1,4 +1,8 @@
-from django.conf.urls import url, include
+# Django
+from django.conf.urls import include
+from django.conf.urls import url
+
+# Local
 from .views import ArticleFrontadmin
 from .views import FrontadminIndex
 

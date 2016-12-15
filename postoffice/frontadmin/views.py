@@ -1,7 +1,9 @@
-from jam.views import CRUDViewSet
+# 3rd-party
 from vanilla import TemplateView
 
+# Project
 from articles.models import Article
+from jam.views import CRUDViewSet
 
 
 class FrontadminIndex(TemplateView):
