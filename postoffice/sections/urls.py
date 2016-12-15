@@ -1,7 +1,9 @@
+# Django
 from django.conf.urls import url
-from .views import SectionListView
-from .views import SectionDetailView
 
+# Local
+from .views import SectionDetailView
+from .views import SectionListView
 
 urlpatterns = [
     url(r'^$', SectionListView.as_view(), name='sections.section.list'),

@@ -1,4 +1,7 @@
+# Django
 from django.contrib import admin
+
+# Local
 from .models import Section
 from .models import SectionMember
 

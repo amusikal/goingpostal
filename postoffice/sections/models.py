@@ -1,8 +1,13 @@
+# Standard Library
 import uuid
-from django.db import models
+
+# Django
 from django.conf import settings
-from core.models import TimeStamped
 from django.core.urlresolvers import reverse
+from django.db import models
+
+# Project
+from core.models import TimeStamped
 
 
 class Section(TimeStamped):

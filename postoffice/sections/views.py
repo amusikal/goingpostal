@@ -1,7 +1,10 @@
+# Django
+from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView
+
+# Local
 from .models import Section
 from .models import SectionMember
-from django.shortcuts import get_object_or_404
 
 
 class SectionViewBase(TemplateView):
