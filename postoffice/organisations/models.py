@@ -1,6 +1,9 @@
+# Standard Library
 import uuid
-from django.db import models
+
+# Django
 from django.conf import settings
+from django.db import models
 
 
 class Organisation(models.Model):
