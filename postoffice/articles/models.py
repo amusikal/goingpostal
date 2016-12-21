@@ -45,13 +45,15 @@ class CoreEntry(models.Model):
 
     topic = models.ForeignKey('topics.Topic', null=True)
 
-    DRAFT = 0
-    HIDDEN = 1
-    PUBLISHED = 2
+    DRAFT = 10
+    HIDDEN = 20
+    PENDING = 50
+    PUBLISHED = 100
     STATUS_CHOICES = (
-        (DRAFT, _('Draft')),
         (HIDDEN, _('Hidden')),
-        (PUBLISHED, _('Published'))
+        (DRAFT, _('Draft')),
+        (PENDING, _('Needs approval')),
+        (PUBLISHED, _('Published')),
         )
 
     status = models.IntegerField(
@@ -68,6 +70,7 @@ class CoreEntry(models.Model):
         abstract = True
         ordering = ['-published']
         get_latest_by = 'published'
+        unique_together = (['slug', 'topic',])
         index_together = [
             ['slug', 'published'],
             ['status', 'published', 'unpublished']]
@@ -76,7 +79,7 @@ class CoreEntry(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('articles.article.detail', kwargs={
+        return reverse('article.detail', kwargs={
             'year': self.created.year,
             'month': self.created.strftime('%m'),
             'slug': self.slug,
@@ -258,6 +261,11 @@ class AbstractArticle(
 
 class Article(AbstractArticle):
     authors = models.ManyToManyField(settings.AUTH_USER_MODEL, through='Author')
+
+    @property
+    def first_author(self):
+        """Retrieve just the first author."""
+        return self.authors.first()
 
 
 class Author(models.Model):
