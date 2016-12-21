@@ -1,9 +1,19 @@
-{{ view.title }}
+{% extends 'sections/base.html' %}
 
 
-<dl>
-  {% for each in object_list %}
-  <dt><a href="{{ each.get_absolute_url }}">{{ each }}</a></dt>
-  <dd>{{ each.description|linebreaks}}</dd>
-  {% endfor %}
-</dl>
+{% block main-heading %}
+  {{ view.title|default:"Sections" }}
+{% endblock %}
+
+
+{% block content-primary %}
+
+  <dl>
+    {% for each in object_list %}
+    <dt><a href="{{ each.get_absolute_url }}">{{ each }}</a></dt>
+    {% if each.is_private %}<dd>Members only</dd>{% endif %}
+    <dd>{{ each.description|linebreaks}}</dd>
+    {% endfor %}
+  </dl>
+
+{% endblock %}

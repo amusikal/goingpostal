@@ -1,3 +1,7 @@
+{% extends 'base.html' %}
+
+
+{% block content-main %}
 {{ object.name }}
 
 
@@ -6,3 +10,4 @@
   <li><a href="{{ article.get_absolute_url }}">{{ article }}</a></li>
   {% endfor %}
 </ul>
+{% endblock %}

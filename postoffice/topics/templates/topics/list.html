@@ -1,3 +1,7 @@
+{% extends 'base.html' %}
+
+
+{% block content-main %}
 <h1>{{ view.title|default:'Topics' }}</h1>
 
 
@@ -7,3 +11,4 @@
   <dd>{{ each.description|linebreaks}}</dd>
   {% endfor %}
 </dl>
+{% endblock %}

@@ -1,3 +1,7 @@
+{% extends 'base.html' %}
+
+
+{% block content-main %}
 <h1>{% if view.kwargs.month %}
   Articles for {{ view.kwargs.month }}/{{ view.kwargs.year }}
 {% elif view.kwargs.year %}
@@ -11,3 +15,4 @@
 
 <h2><a href="{{ object.get_absolute_url }}">{{ object.title }}</a></h2>
 {% endfor %}
+{% endblock %}

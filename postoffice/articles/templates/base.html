@@ -1,0 +1,42 @@
+{% load static %}<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'Skeleton-2.0.4/css/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'Skeleton-2.0.4/css/skeleton.css' %}">
+    <style>
+    textarea { width: 100%; max-width: 960px; height: 30rem; }
+    input[type=text] { width: 100%; }
+    header.lead { margin: 0px auto; background-color: #333; margin-bottom: 2em; }
+    main { clear:both; }
+    td span.subtitle { color:#999; font-size: 1.5rem; }
+    h4 { margin: 0; line-height:0.8; font-size:1.8rem; font-weight: 600; }
+    </style>
+  </head>
+  <body>
+    <!--if lt IE 8
+    p.chromeframe.
+      You are using an <strong>outdated</strong> browser.
+      Please <a href="http://browsehappy.com/">upgrade your browser</a>
+      to improve your experience.
+
+    -->
+    <header class="lead">
+      <div class="container">
+      <div class="logo"></div>
+      <div class="toolbar"></div>
+      </div>
+    </header>
+
+    <main>
+    <div class="container">
+    {% block content-main %}{% endblock %}
+    </div>
+    </main>
+
+    <footer></footer>
+  </body>
+</html>

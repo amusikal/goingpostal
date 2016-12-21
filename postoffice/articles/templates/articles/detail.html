@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+
+{% block content-main %}
 <h1>{{ object.title }}</h1>
 <p>{{ object.topic.section }} &middot; {{ object.topic }}
 
@@ -12,3 +15,4 @@
   {{ comment.comment|linebreaks }}
 </div>
 {% endfor %}
+{% endblock %}
