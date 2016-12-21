@@ -1,0 +1,80 @@
+{% extends 'articles/base.html' %}
+
+
+
+{% block main-heading %}
+  {{ object.title }}
+{% endblock %}
+
+
+{% block content-primary %}
+
+    <div class="post">
+      <h2 class="post-title">{{ object.title }}</h2>
+
+      <div class="post-meta">
+        <span class="post-meta-published-at">Published on {{ object.published|default:object.created|date }}</span>
+        <span class="post-meta-comments">6 comments</span>
+        <div class="post-meta-manage">Manage post
+          <ul class="post-meta-manage-options">
+            <li class="post-meta-manage-options-item"><a class="primary-link" href="#">Edit post</a>
+            <li class="post-meta-manage-options-item"><a class="primary-link" href="#">Delete post</a>
+            <li class="post-meta-manage-options-item"><a class="primary-link" href="#">Approve post</a>
+          </ul>
+        </div>
+      </div>
+
+      <p>{{ object.topic.section }} &middot; {{ object.topic }}</p>
+
+      <div class="post-content">
+      {{ object.content|linebreaks }}
+      </div>
+
+    </div><!-- /.post -->
+
+    <div>
+
+      {% if object.comment %}
+      <h2 class="comment-title">Comments</h2>
+
+      {% for comment in object.comments %}
+      <div class="comment" id="comment-{{ comment.id }}" style="border-top: 1px solid #eee; padding-top: 1em;">
+      <pre>#comment-{{ object.uuid }}:{{ comment.id }}</pre>
+      {{ comment.comment|linebreaks }}
+      </div>
+      {% endfor %}
+      {% endif %}
+    </div>
+
+    <h2 class="add-comment-title">Add Comment</h2>
+    <textarea class="add-comment-textarea"></textarea>
+    <button class="add-comment-button primary-button js-add-comment-button">Add Comment</button>
+
+{% endblock %}
+
+
+
+{% block content-secondary %}
+
+    {% include "includes/profile.html" %}
+
+    <h3 class="side-heading">Classmates Blogs</h3>
+    <ul class="side-list">
+      <li class="side-list-item"><a class="primary-link" href="#">Tom J</a>
+      <li class="side-list-item"><a class="primary-link" href="#">Jane S</a>
+      <li class="side-list-item"><a class="primary-link" href="#">David W</a>
+      <li class="side-list-item"><a class="primary-link" href="#">John D</a>
+      <li class="side-list-item"><a class="primary-link" href="#">Michael P</a>
+    </ul>
+
+    <h3 class="side-heading">Grown Up Blogs</h3>
+    <ul class="side-list">
+      <li class="side-list-item"><a class="primary-link" href="#">Diffing images on the command line</a>
+      <li class="side-list-item"><a class="primary-link" href="#">A Day of Communication at Github</a>
+      <li class="side-list-item"><a class="primary-link" href="#">Our Trip to the Zoo</a>
+      <li class="side-list-item"><a class="primary-link" href="#">Diffing images on the command line</a>
+      <li class="side-list-item"><a class="primary-link" href="#">A Day of Communication at Github</a>
+      <li class="side-list-item"><a class="primary-link" href="#">Our Trip to the Zoo</a>
+    </ul>
+
+{% endblock %}

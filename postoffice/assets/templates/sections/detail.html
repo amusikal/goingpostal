@@ -1,0 +1,29 @@
+{% extends 'sections/base.html' %}
+
+{% block main-heading %}
+  {{ object.name }}
+{% endblock %}
+
+
+{% block content-primary %}
+
+  <div class="pop_list_pad">
+  <ul class="grow_ul">
+    {% for topic in object.topic_set.all %}
+    <li><a href="{{ topic.get_absolute_url }}">{{ topic }}</a></li>
+    {% endfor %}
+  </ul>
+  </div>
+
+{% endblock %}
+
+
+{% block content-secondary %}
+
+  <ul>
+    {% for member in object_list %}
+    <li>{{ member.user }}</li>
+    {% endfor %}
+  </ul>
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'topics/base.html' %}
+
+
+{% block main-heading %}
+  {{ object.name }}
+{% endblock %}
+
+
+{% block content-primary %}
+
+  <ul>
+    {% for article in object.articles %}
+    <li><a href="{{ article.get_absolute_url }}">{{ article }}</a></li>
+    {% endfor %}
+  </ul>
+
+{% endblock %}

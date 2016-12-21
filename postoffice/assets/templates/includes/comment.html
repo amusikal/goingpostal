@@ -1,0 +1,14 @@
+<div class="comment-item">
+  {% comment %}
+  {% with comment.user.avatar as avatar %}
+  {% if avatar %}
+  <img class="comment-item-image" src="http://weemeeimages.primarysite.net/primarysite/{{avatar.avatar_id}}/weemee/width/{% if avatar_width %}{{ avatar_width }}{% else %}100{% endif %}.png?showlogo=false&amp;showenvironment=false&amp;time={% now "U" %}" alt="Avatar of {{ comment.user }}">
+  {% endif %}
+  {% endwith %}
+  {% endcomment %}
+  <div class="comment-item-info">
+    <p class="comment-item-info-name">{{ comment.comment_name }}</p>
+    <p class="comment-item-info-date">Commented on {{ comment.created|date:"jS F Y" }} at {{ comment.created|time }}</p>
+    <div class="comment-item-info-text">{{ comment.body|linebreaks }}</div>
+  </div>
+</div>

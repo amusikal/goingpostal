@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+  <div class="main-content">
+  {% block content-primary %}{% endblock %}
+  </div>
+
+  <div class="side-content">
+  {% block content-secondary %}{% endblock %}
+  </div>
+
+{% endblock %}

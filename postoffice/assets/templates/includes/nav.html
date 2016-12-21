@@ -1,0 +1,50 @@
+<nav class="nav">
+  <div class="nav-header">
+    <h2 class="nav-header-title">Menu</h2>
+    <button class="nav-header-close-nav primary-button" aria-hidden="true">
+      <span class="hide-text-absolute">Close Menu</span>
+    </button>
+  </div>
+
+  <!--
+  <h3 class="nav-section-heading">Classes</h3>
+  <ul class="nav-section-list">
+    <li class="nav-section-list-item is-active"><a class="nav-section-list-item-link is-active" href="#">Class 1</a>
+    <li class="nav-section-list-item"><a class="nav-section-list-item-link" href="#">Class 2</a>
+    <li class="nav-section-list-item"><a class="nav-section-list-item-link" href="#">Class 3</a>
+    <li class="nav-section-list-item"><a class="nav-section-list-item-link" href="#">Class 4</a>
+    <li class="nav-section-list-item"><a class="nav-section-list-item-link" href="#">Class 5</a>
+  </ul>
+  -->
+
+  {% if navigation.classes %}
+    <h3 class="nav-section-heading">Classes</h3>
+    <ul class="nav-section-list">
+    {% for class in navigation.classes %}
+    <li class="nav-section-list-item"><a class="nav-section-list-item-link" href="{% url blog__list_by_group class.slug class.pk %}">{{ class.group_name }}</a>
+    {% endfor %}
+    </ul>
+  {% endif %}
+
+  {% if navigation.teachers %}
+    <h3 class="nav-section-heading">Grown Up Blogs</h3>
+    <ul class="nav-section-list">
+    {% for teacher in navigation.teachers %}
+    {% if teacher.slug %}
+    <li class="nav-section-list-item"><a class="nav-section-list-item-link" href="{% url blog__list_by_user teacher.slug teacher.pk %}">{{ teacher.familiar_name }}</a>
+    {% endif %}
+    {% endfor %}
+    </ul>
+  {% endif%}
+
+  <ul class="nav-section-auth-heading nav-section-list">
+    {% if request.user.is_authenticated %}
+    <li class="nav-section-list-item"><a class="nav-section-list-item-link" href="{% url blog_admin__index %}" >Admin Area</a>
+      <li class="nav-section-list-item"><a class="nav-section-list-item-link" href="{% url auth__logout %}" >Log out</a>
+    {% else %}
+    <li class="nav-section-list-item"><a class="nav-section-list-item-link" href="{% url auth__login %}" >Log in</a>
+    {% endif %}
+  </ul>
+</nav>
+
+<div class="overlay"></div>

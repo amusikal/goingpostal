@@ -1,0 +1,24 @@
+        {% if perms.blog.can_approve_posts %}
+
+        <div class="post-meta-manage">Manage post
+          <ul class="post-meta-manage-options">
+            <li class="post-meta-manage-options-item"><a class="primary-link" href="#">Edit post</a>
+
+            {% ifnotequal blog.status.slug 'deleted' %}
+            <li class="post-meta-manage-options-item"><a class="primary-link" href="#">Delete post</a>
+              {% ifequal blog.status.slug 'unapproved' %}
+              <li class="post-meta-manage-options-item"><a class="primary-link" href="#">Approve post</a>
+              {% else %}
+              <li class="post-meta-manage-options-item"><a class="primary-link" href="#">Unapprove post</a>
+              {% endifequal %}
+            {% else %}
+            <li class="post-meta-manage-options-item"><a class="primary-link" href="#">Undelete post</a>
+            {% endifnotequal %}
+
+          </ul>
+        </div>
+        {% else %}
+        {% ifequal blog.status.slug 'unapproved' %}{% ifequal blog.user request.user %}
+          <span class="post-meta-manage"><a class="primary-link" href="#">Edit post</a></span>
+          {% endifequal %}{% endifequal %}
+        {% endif %}

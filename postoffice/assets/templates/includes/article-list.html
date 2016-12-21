@@ -1,0 +1,14 @@
+<div class="post{% if object.status != 100 %} is-unapproved{% endif %}">
+  <h2 class="post-title{% if object.status != 100 %} is-unapproved{% endif %}">
+    <a class="primary-link" href="{{ object.get_absolute_url }}">{{ object.title }}</a>
+  </h2>
+
+  <div class="post-meta">
+    <span class="post-meta-author">Written by {{ object.authors.first }}</span>
+    <span class="post-meta-published-at{% if object.status != 100 %} is-unapproved">This post is unapproved{% else %}">Published on {{ object.created|date:"jS F Y" }}{% endif %}</span>
+    <span class="post-meta-comments">#TODO comments</span>
+    {% include 'includes/post-meta-manage.html' %}
+  </div>
+
+  <p class="post-content">{{ blogpost.summary_text }}</p>
+</div>

@@ -1,0 +1,16 @@
+{% extends 'topics/base.html' %}
+
+
+{% block main-heading %}
+  {{ view.title|default:'Topics' }}
+{% endblock %}
+
+
+{% block content-primary %}
+<dl>
+  {% for each in object_list %}
+  <dt><a href="{{ each.get_absolute_url }}">{{ each }}</a></dt>
+  <dd>{{ each.description|linebreaks}}</dd>
+  {% endfor %}
+</dl>
+{% endblock %}

@@ -1,0 +1,14 @@
+/* Global variables, config switches, branch colours, etc.
+========================================================== */
+
+@custom-media --viewportMobile (max-width: 630px);
+@custom-media --viewportTablet (min-width: 631px) and (max-width: 980px);
+@custom-media --viewportMobileTablet (max-width: 980px);
+@custom-media --viewportDesktop (min-width: 981px);
+
+@custom-selector :--focusHover :focus, :hover;
+
+:root {
+  --primaryButtonColour: #0e8fc1;
+  --primaryButtonColourDarker: color(var(--primaryButtonColour) l(- 6%));
+}

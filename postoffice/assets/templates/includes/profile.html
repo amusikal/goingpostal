@@ -1,0 +1,9 @@
+<h3 class="side-heading">About {{ user.familiar_name }}</h3>
+{% with user.avatar as avatar %}
+  <img class="side-wee-mee" src="http://weemeeimages.primarysite.net/primarysite/{{avatar.avatar_id}}/weemee/width/99.png?showlogo=false&amp;showenvironment=false&amp;time={% now "U" %}{# static 'images/wee-mee.jpg' #}" alt="Mr Bassnett's avatar.'">
+{% endwith %}
+<div class="side-profile-text">{{ user.description|safe }}</div>
+
+{% if euser %}
+<a href="{% ifequal euser request.user %}{% url account__weemee %}{% else %}{% url account__weemee_by_pk euser.pk %}{% endifequal %}" id="editWeeMeeBttn">Edit WeeMee</a>
+{% endif %}

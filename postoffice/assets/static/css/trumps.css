@@ -1,0 +1,46 @@
+/* Utilities, modifiers and overrides
+===================================== */
+
+.hide-text-absolute {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+}
+
+.primary-link {
+  text-decoration: none;
+  color: #4589b3;
+  transition: color 0.2s ease;
+}
+
+.primary-link:--focusHover {
+  color: #64aedc;
+}
+
+.primary-button {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 0.4rem;
+  font: inherit;
+  font-size: 1.4rem;
+  color: #fff;
+}
+
+.primary-button:--focusHover {
+  cursor: pointer;
+}
+
+.primary-label {
+  font-size: 1.4rem;
+}
+
+.primary-input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 1px solid #dedede;
+  border-radius: 0.4rem;
+  font-size: 1.4rem;
+  background: #fff;
+}

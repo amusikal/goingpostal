@@ -1,0 +1,58 @@
+{% load static %}<!doctype html>
+<html lang="en-gb">
+  {% block head %}
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <title>{% if page_title %}{{ page_title }} | {% endif %}{{ site.name }}</title>
+
+      {% block styles %}
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700">
+      <link rel="stylesheet" href="{% static 'dist/app.css' %}">
+      {% endblock %}
+
+      {% block meta %}{% endblock %}
+    </head>
+  {% endblock head %}
+
+  <body>
+    <header class="header">
+      <div class="header-inner-container">
+        <div>
+          <button class="nav-menu-button primary-button" aria-hidden="true">
+            <span class="nav-menu-button-lines"></span>
+            <span class="nav-menu-button-text">Menu</span>
+          </button>
+
+          {# include "includes/nav.html" #}
+        </div>
+
+        <a class="header-school-info" href="/">
+          <img class="header-school-info-logo" src="https://primary-podcast-assets.s3.amazonaws.com:443/4/logo-1460995363.2130535.large.png" alt="">
+          <span class="header-school-info-name">PrimarySite</span>
+        </a>
+      </div>
+    </header>
+
+    {% if request.user.is_authenticated %}
+      {# include "includes/admin-bar.html" #}
+    {% endif %}
+
+    {# include "includes/message-bar.html" #}
+
+    <div class="page-heading">
+      <h1 class="page-heading-title">
+        {% block main-heading %}{% endblock %}
+      </h1>
+    </div>
+
+    <div class="container">
+      {% block content %}{% endblock %}
+    </div>
+
+    <script type="text/javascript" src="{% static 'js/libs/mootools.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/app.js' %}"></script>
+    {% block scripts %}{% endblock %}
+  </body>
+</html>

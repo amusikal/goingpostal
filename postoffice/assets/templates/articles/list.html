@@ -1,0 +1,38 @@
+{% extends 'articles/base.html' %}
+
+{% block main-heading %}
+  {% if view.kwargs.month %}
+  Articles for {{ view.kwargs.month }}/{{ view.kwargs.year }}
+  {% elif view.kwargs.year %}
+  Articles for {{ view.kwargs.year }}
+  {% else %}
+  Articles
+  {% endif %}
+{% endblock %}
+
+
+{% block content-primary %}
+
+  {% comment %}
+  {% for object in object_list %}
+  <h2><a href="{{ object.get_absolute_url }}">{{ object.title }}</a></h2>
+  {% endfor %}
+  {% endcomment %}
+
+
+  {% for object in object_list %}
+    {% include 'includes/article-list.html' %}
+  {% endfor %}
+
+{% endblock %}
+
+
+{% block content-secondary %}
+
+  {% if blog_user %}
+    {% with blog_user as user %}
+    {% include "includes/profile.html" %}
+    {% endwith %}
+  {% endif %}
+
+{% endblock %}
