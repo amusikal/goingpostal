@@ -12,7 +12,7 @@ class TopicMemberInline(admin.TabularInline):
 
 
 class TopicAdmin(admin.ModelAdmin):
-    list_display = ('name', 'created', 'modified')
+    list_display = ('name', 'section', 'modified')
     date_hierarchy = 'modified'
     readonly_fields = ('created', 'modified', 'uuid')
     # inlines = [TopicMemberInline]
