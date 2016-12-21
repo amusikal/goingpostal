@@ -21,7 +21,7 @@
       <tr>
         <td style="line-height:0.8;"><h4><a href="{% url view.crud.update.name pk=object.pk %}">{{ object }}</a></h4>
 
-          <br><span class="subtitle">in {{ object.topic }}</span></td>
+          <br><span class="subtitle">by <span style="color:#666;">{{ object.first_author }}</span> in {{ object.topic }}</span></td>
         <td style="font-size: 1.5rem;">
           Modified: {{ object.modified }}
           <br>Status: {{ object.get_status_display }}
