@@ -43,6 +43,7 @@ class ArticleAdmin(admin.ModelAdmin):
     #     'lead'
     #     'unpublished',
     #     )
+    raw_id_fields = ('topic', )
 
     readonly_fields = (
         'comment_count',
