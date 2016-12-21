@@ -21,6 +21,11 @@ class Section(TimeStamped):
         unique=True,
         default=uuid.uuid4
         )
+    is_public = models.BooleanField(
+        default=True,
+        verbose_name='public?',
+        help_text='Is this section visible to all visitors?'
+        )
 
     class Meta:
         unique_together = (['slug', 'site'], )
@@ -49,7 +54,7 @@ class SectionMember(TimeStamped):
         (ROLE_MEMBER, 'Member'),
         (ROLE_OBSERVER, 'Observer'),
         )
-    roles = models.PositiveSmallIntegerField(
+    role = models.PositiveSmallIntegerField(
         choices=ROLES,
         default=ROLE_MEMBER
         )
@@ -62,3 +67,7 @@ class SectionMember(TimeStamped):
 
     class Meta:
         unique_together = (['user', 'section'], )
+
+    def __str__(self):
+        return '{user}@{section} / {site}'.format(
+            user=self.user.username, section=self.section.slug, site=self.section.site)

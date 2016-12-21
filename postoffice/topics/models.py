@@ -15,6 +15,20 @@ class Topic(TimeStamped):
     name = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255)
     section = models.ForeignKey('sections.Section')
+    description = models.TextField(blank=True)
+
+    ARCHIVED = 0
+    PENDING = 50
+    PUBLISHED = 100
+    STATUS_CHOICES = (
+        (ARCHIVED, 'Archive'),
+        (PENDING, 'Pending'),
+        (PUBLISHED, 'Publish'),
+        )
+    status = models.PositiveSmallIntegerField(
+        choices=STATUS_CHOICES,
+        default=PUBLISHED
+        )
 
     uuid = models.UUIDField(
         verbose_name='UUID',
@@ -37,7 +51,7 @@ class Topic(TimeStamped):
         return qs
 
 
-class TopicMember(models.Model):
+class TopicMember(TimeStamped):
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     topic = models.ForeignKey(Topic)
@@ -64,8 +78,6 @@ class TopicMember(models.Model):
         unique=True,
         default=uuid.uuid4
         )
-    created = models.DateTimeField(blank=True, null=True)
-    modified = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         unique_together = (['user', 'topic'], )
