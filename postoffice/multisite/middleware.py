@@ -1,13 +1,11 @@
 # Standard Library
-import os
 import logging
 
 # Django
 from django.conf import settings
-from django.contrib.redirects.models import Redirect
 from django.contrib.sites.models import Site
-from django.core.exceptions import MiddlewareNotUsed
-from django.http import HttpResponseGone
+from django.http import Http404
+from django.contrib.sites.shortcuts import get_current_site
 from django.http import HttpResponsePermanentRedirect
 
 
@@ -18,82 +16,96 @@ def cache_installed():
     return False
 
 
-def cache_get(*args, **kwargs):
+def cache_get_site(*args, **kwargs):
     raise NotImplementedError
 
 
-def cache_set(*args, **kwargs):
+def cache_set_site(*args, **kwargs):
     raise NotImplementedError
+
+
+def cache_key_for_domain(domain):
+    if not cache_installed():
+        return
+    bits = (settings.CACHE_MIDDLEWARE_KEY_PREFIX, domain)
+    cache_key = '{0}.site.{1}'.format(*bits)
+    return cache_key
+
+
+def get_site_for_domain(domain):
+    try:
+        site = Site.objects.get(domain=domain)
+    except Site.DoesNotExist:
+        return
+    return site
+
+
+def site_cache_for_domain(domain):
+    site = None
+    cache_key = cache_key_for_domain(domain)
+
+    if cache_installed():
+        site = cache_get_site(cache_key)
+
+    if not site:
+        site = get_site_for_domain(domain)
+
+    if site and cache_installed():
+        cache_set_site(cache_key, site)
+
+    return site
 
 
 def multisite_middleware(get_response):
 
     def middleware(request):
 
-        site_id = getattr(request, 'site_id', None)
+        # Request must be something.
+        if not request:
+            return get_response(request)
 
-        if request and not site_id:
-            site_id = request.session.get('site_id', None)
-            if not site_id:
+        site = getattr(request, 'site', None)
 
-                domain = str(request.get_host().lower())
-                if cache_installed():
-                    bits = (settings.CACHE_MIDDLEWARE_KEY_PREFIX, domain)
-                    cache_key = '{0}.site_id.{1}'.format(*bits)
-                    site_id = cache_get(cache_key)
+        if not site:
+            site = request.session.get('site', None)
 
-                if not site_id:
-                    try:
-                        site = Site.objects.get(domain=domain)
-                    except Site.DoesNotExist:
-                        pass
-                    else:
-                        site_id = site.id
-                        if cache_installed():
-                            cache_set(cache_key, site_id)
+        if not site:
+            domain = str(request.get_host().lower())
+            site = site_cache_for_domain(domain)
+        request.site = site
 
-        if not site_id:
-            site_id = os.environ.get('MASTER_SITE_ID', settings.SITE_ID)
-
-        if request and site_id and not getattr(settings, 'TESTING', False):
-            request.site_id = site_id
-
-        if request.site_id:
-            logger.debug('Got site_id: {}'.format(request.site_id))
         response = get_response(request)
         return response
 
     return middleware
 
 
-def redirect_fallback_middleware(get_response):
-    """
-    Port of Django's ``RedirectFallbackMiddleware`` that uses
-    Mezzanine's approach for determining the current site.
-    """
+def master_redirect_middleware(get_response):
 
     def middleware(request):
-        response = get_response(request)
+        site = getattr(request, 'site', None)
 
-        if response.status_code == 404:
-            lookup = {
-                'site_id': request.site_id,
-                'old_path': request.get_full_path(),
-            }
-            try:
-                redirect = Redirect.objects.get(**lookup)
-            except Redirect.DoesNotExist:
-                pass
-            else:
-                if not redirect.new_path:
-                    response = HttpResponseGone()
-                else:
-                    response = HttpResponsePermanentRedirect(
-                        redirect.new_path)
+        # Shortcut if we have a site.
+        if site:
+            return get_response(request)
 
+        # Otherwise, try to redirect to the master domain.
+        site = get_current_site(request)
+        logger.debug('Falling back to {}'.format(site))
+        master_site = 'http://{}'.format(site.domain)
+        response = HttpResponsePermanentRedirect(master_site)
         return response
 
-    if 'django.contrib.redirects' not in settings.INSTALLED_APPS:
-        raise MiddlewareNotUsed
+    return middleware
+
+
+def site_not_found_middleware(get_reponse):
+
+    def middleware(request):
+        site = getattr(request, 'site', None)
+        if not site:
+            raise Http404('Site Not Found')
+        response = get_reponse(request)
+        return response
 
     return middleware
