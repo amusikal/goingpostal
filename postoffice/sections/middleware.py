@@ -23,13 +23,13 @@ def site_sections_middleware(get_response):
 
     def middleware(request):
 
-        site = getattr(request, 'site_id', None)
+        site = getattr(request, 'site', None)
 
         # Bug out early if nothing to do.
         if not site:
-            logger.debug('Unable to get site_id.')
+            logger.debug('Unable to get site.')
             return get_response(request)
-        logger.debug('Got request.site_id: {}'.format(site))
+        logger.debug('Got request.site: {}'.format(site))
 
         sections = sections_for_site_user(site, request.user)
         logger.debug('Got sections: {}'.format(sections))

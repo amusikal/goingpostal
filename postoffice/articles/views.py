@@ -13,7 +13,7 @@ class ArticleViewBase(TemplateView):
 
     def get_queryset(self):
         sections = Section.objects.filter(
-            site_id=self.request.site_id).values_list('pk', flat=True)
+            site=self.request.site).values_list('pk', flat=True)
 
         queryset = Article.objects.filter(
             topic__section__in=sections
