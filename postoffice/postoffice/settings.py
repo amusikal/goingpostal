@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    'django.contrib.redirects',
+    # 'django.contrib.redirects',
     'django.contrib.flatpages',
 
     'assets',
@@ -53,10 +53,10 @@ INSTALLED_APPS = [
 
     'rules.apps.AutodiscoverRulesConfig',
 
-    'frontadmin',
-    'jam',
+    #'frontadmin',
+    #'jam',
 
-    'organisations',
+    #'organisations',
     'topics',
     'sections',
     'articles',
@@ -75,7 +75,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     'multisite.middleware.multisite_middleware',
-    'multisite.middleware.redirect_fallback_middleware',
+    'multisite.middleware.master_redirect_middleware',
+    # 'multisite.middleware.site_not_found_middleware',
+    
     'sections.middleware.site_sections_middleware',
 ]
 

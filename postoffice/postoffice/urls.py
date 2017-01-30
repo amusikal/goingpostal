@@ -24,7 +24,7 @@ urlpatterns = [
     url(r'^sections/', include('sections.urls')),
     url(r'^topics/', include('topics.urls')),
     url(r'^articles/', include('articles.urls')),
-    url(r'^frontadmin/', include('frontadmin.urls')),
+    # url(r'^frontadmin/', include('frontadmin.urls')),
 
     url(r'^accounts/login/$', auth_views.login, name='login'),
 ]
